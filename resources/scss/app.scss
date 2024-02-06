@@ -1,1 +1,12 @@
 @import "~bootstrap/scss/bootstrap";
+
+@font-face {
+    font-family: amagro;
+    src: url(/resources/fonts/Amagro.ttf);
+}
+
+.proj {
+    font-family: amagro;
+    text-transform: uppercase;
+    font-size: 70px;
+}
