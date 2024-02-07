@@ -30,7 +30,7 @@ Route::get('/', function () {
     Route::get('/', [DashboardContoller::class, 'index'])
     ->name('dashboard');
 
-    Route::resource('projects', ProjectController::class);
+    Route::resource('projects', ProjectController::class)->parameters(['projects' => 'project:slug']);
 
 
  });
