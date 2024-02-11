@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
+
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -42,10 +43,9 @@ class ProjectController extends Controller
         $project->year = $data['year'];
         $project->slug = Str::of($project->title)->slug('-');
 
-
         $project->save();
 
-        return redirect()->route('admin.projects.show', ['project' => $project->slug]);
+        return redirect()->route('admin.projects.show', ['project' => $project->slug])->with('message', 'proj creato con successo');
 
     }
 
@@ -63,7 +63,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit', compact('project'));
+        
     }
 
     /**
@@ -71,7 +72,17 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        $data = $request->validated();
+
+        $project->title = $data['title'];
+        $project->description = $data['description'];
+        $project->image = $data['image'];
+        $project->year = $data['year'];
+        $project->slug = Str::of($project->title)->slug('-');
+
+        $project->update($data);
+
+        return redirect()->route('admin.projects.show', ['project' => $project->slug])->with('message', 'proj aggiornato con successo');
     }
 
     /**
@@ -79,6 +90,10 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+ 
+        $project_id = $project->id;
+        $project->delete();
+
+        return redirect()->route('admin.projects.index')->with('message', "Post $project_id cancellato correttamente");
     }
 }

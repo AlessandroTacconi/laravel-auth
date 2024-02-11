@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardContoller;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Guest\WelcomeController;
 use App\Http\Controllers\ProfileController;
 
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', [WelcomeController::class, 'index'],function () {
     return view('welcome');
 });
 

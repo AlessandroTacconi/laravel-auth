@@ -31,6 +31,7 @@ h3 {
 }
 
 .scorrevole {
+    overflow: hidden;
     overflow-y: scroll;
     max-height: 100vh;
 }
@@ -47,4 +48,8 @@ h3 {
     100% {
         transform: translateY(-100%);
     }
+}
+
+.index {
+    margin-top: 10px;
 }

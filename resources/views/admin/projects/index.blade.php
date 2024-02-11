@@ -1,34 +1,43 @@
 @extends('layouts.admin')
 
 @section('content')
+    <div class="container index">
+        <h1 class="proj">My projects</h1>
+        <a href="{{ route('admin.projects.create') }}" class="btn btn-success btn-sm" role="button">Add a project <i
+                class="fa-solid fa-square-plus"></i></a>
 
-<div class="d-flex justify-content-between container">
-  <div class="left">
-    <h1 class="proj">My projects</h1>
-    <a href="{{ route('admin.projects.create')}}" class="btn btn-success btn-sm" role="button">Add a project</a>
-  </div>
-  <div class="scorrevole">
-  <ul class="d-flex flex-column gap-3 mt-5">
-    @foreach ($projects as $project)
-      <li class="me-5">
-        <div class="card" style="width: 18rem;">
-          <img src="..." class="card-img-top" alt="{{ $project->image }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ $project->title }}</h5>
-            <p class="card-text">{{ $project->year }}</p>
-            {{-- <p class="card-text">{{ $project->slug }}</p> --}}
-            <div>
-              <a href="#" class="btn btn-primary btn-sm" role="button">Edit</a>
-              <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-secondary btn-sm" role="button">Show</a>
-              <a href="#" class="btn btn-danger btn-sm" role="button">Delete</a>
-            </div>
-          </div>
-        </div>
-      </li>
-      
-    @endforeach
-  </ul>
-  </div>
-</div>
 
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Titolo</th>
+                    <th scope="col">Anno</th>
+                    <th scope="col">Bottoni</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($projects as $project)
+                    <tr>
+                        <td>{{ $project->title }}<br>{{ $project->slug }}</td>
+                        <td>{{ $project->year }}</td>
+                        <td>
+                            <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-outline-success btn-sm"
+                                role="button">Show <i class="fa-solid fa-circle-info ms-1"></i></a>
+                            <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-primary btn-sm"
+                                role="button">Edit <i class="fa-regular fa-pen-to-square"></i></a>
+                            {{-- <a href="#" class="btn btn-danger btn-sm" role="button">Delete</a> --}}
+                            <form action="{{ route('admin.projects.destroy', $project) }}" method="POST"
+                                class="d-inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger btn-sm">Elimina <i
+                                        class="fa-solid fa-trash-can ms-1"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 @endsection
